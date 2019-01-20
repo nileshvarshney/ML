@@ -1,6 +1,8 @@
 from datetime import timedelta
-from datetime import datetime
+from datetime import datetime, date
 from dateutil.relativedelta import relativedelta
+from dateutil.rrule import *
+import calendar
 
 # Todo:
 # You have code that needs to perform simple time conversions,
@@ -60,6 +62,29 @@ def find_date_by_day(day, start_date=None):
 
 print(find_date_by_day('Wednesday',datetime(2018, 12, 12)))
 print(find_date_by_day('Friday'))
+
+# using relative delta
+print('Next Friday :', curr_date + relativedelta(weekday=FR))
+print('Last Monday :', curr_date + relativedelta(weekday=MO(-2)))
+
+# loop over each date in the current month, and want an efficient way to calculate that date range.
+
+
+def get_month_date_range(start_date=None):
+    if not start_date:
+        start_date = date.today().replace(day=1)
+    _, no_of_days = calendar.monthrange(start_date.year, start_date.month)
+    end_date = start_date + timedelta(days=no_of_days)
+    return start_date, end_date
+
+
+a_day = timedelta(days=1)
+start_date, end_date = get_month_date_range()
+while start_date < end_date:
+    print(start_date )
+    start_date += a_day
+
+print(datetime.strftime(datetime.today(), '%B %d, %Y'))
 
 
 
